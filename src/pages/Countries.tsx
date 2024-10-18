@@ -5,6 +5,7 @@ import SortBy from "../components/SortBy"
 
 const Countries: React.FC = () => {
   const [countries, setCountries] = useState<Country[]>([])
+  const [selected, setSelected] = useState<string[]>([])
 
   const getCountries = async () => {
     const res = await fetch("https://restcountries.com/v3.1/all")
@@ -16,9 +17,31 @@ const Countries: React.FC = () => {
     console.log(countriesSorted)
   }
 
+  const regions = Array.from(
+    new Set(countries.map((country) => country.region))
+  )
   useEffect(() => {
     getCountries()
   }, [])
+
+  useEffect(() => {
+    if (selected.length > 0) {
+      const filteredCountries = countries.filter((country) =>
+        selected.includes(country.region)
+      )
+      setCountries(filteredCountries)
+    } else {
+      getCountries()
+    }
+  }, [selected])
+
+  const handleSelect = (region: string) => {
+    if (selected.includes(region)) {
+      setSelected(selected.filter((r) => r !== region))
+    } else {
+      setSelected([...selected, region])
+    }
+  }
 
   return (
     <main className="min-h-screen bg-Back-color">
@@ -43,6 +66,20 @@ const Countries: React.FC = () => {
         <SortBy countries={countries} setCountries={setCountries} />
         <div>
           <span className="text-Text-color opacity-70">Region</span>
+          <div className="flex gap-3 justify-center">
+            {regions.map((region) => (
+              <button
+                key={region}
+                value={region}
+                onClick={() => handleSelect(region)}
+                className={`text-Text-color bg-Back-modal px-3 py-1 rounded-2xl ${
+                  selected.includes(region) ? "bg-blue-500" : ""
+                }`}
+              >
+                <span>{region}</span>
+              </button>
+            ))}
+          </div>
         </div>
         <div>
           <span className="text-Text-color opacity-70">Status</span>
