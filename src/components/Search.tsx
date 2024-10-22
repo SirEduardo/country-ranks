@@ -48,7 +48,7 @@ const Search: React.FC<Props> = ({ countries, setCountries }) => {
       <input
         value={search}
         onChange={handleSearch}
-        className="bg-black/20 py-2 px-4 pr-10 rounded-xl w-full"
+        className="bg-black/20 py-2 px-4 pr-10 rounded-xl w-full text-white"
         placeholder="Search by name or region"
         type="text"
       />
