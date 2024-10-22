@@ -56,8 +56,8 @@ const Countries: React.FC = () => {
           src="/src/assets/Logo.svg"
         />
       </div>
-      <header className="flex p-5 justify-between pt-10 items-center">
-        <div className="text-Text-color opacity-70">
+      <header className="flex p-2 justify-between pt-10 items-center">
+        <div className="text-Text-color text-center opacity-70">
           Found {countries.length} countries
         </div>
         <Search countries={countries} setCountries={setCountries} />
@@ -66,7 +66,7 @@ const Countries: React.FC = () => {
         <SortBy countries={countries} setCountries={setCountries} />
         <div>
           <span className="text-Text-color opacity-70">Region</span>
-          <div className="flex gap-3 justify-center">
+          <div className="flex pt-2 gap-3 justify-center flex-wrap">
             {regions.map((region) => (
               <button
                 key={region}
@@ -98,14 +98,16 @@ const Countries: React.FC = () => {
           <tbody>
             {countries.map((country) => (
               <tr key={country.name.common}>
-                <td className="py-2 px-4 text-5xl">{country.flag}</td>
-                <td className="py-2 px-4 text-Text-color">
+                <td className="py-2 px-2 text-xl lg:px-4 lg:text-5xl">
+                  {country.flag}
+                </td>
+                <td className="py-2 px-2 lg:px-4 text-Text-color">
                   {country.name.common}
                 </td>
-                <td className="py-2 px-4 text-Text-color">
+                <td className="py-2 px-2 lg:px-4 text-Text-color">
                   {country.population.toLocaleString()}
                 </td>
-                <td className="py-2 px-4 text-Text-color">
+                <td className="py-2 px-2 lg:px-4 text-Text-color">
                   {country.area.toLocaleString()}
                 </td>
               </tr>
