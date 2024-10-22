@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react"
 import { Country } from "../types"
 import Search from "../components/Search"
 import SortBy from "../components/SortBy"
+import { Link } from "react-router-dom"
+import Hero from "../components/Hero"
 
 const Countries: React.FC = () => {
   const [countries, setCountries] = useState<Country[]>([])
+  const [filteredCountries, setFilteredCountries] = useState<Country[]>([])
   const [selected, setSelected] = useState<string[]>([])
 
   const getCountries = async () => {
@@ -14,7 +17,7 @@ const Countries: React.FC = () => {
       (a: Country, b: Country) => b.population - a.population
     )
     setCountries(countriesSorted)
-    console.log(countriesSorted)
+    setFilteredCountries(countriesSorted)
   }
 
   const regions = Array.from(
@@ -26,14 +29,14 @@ const Countries: React.FC = () => {
 
   useEffect(() => {
     if (selected.length > 0) {
-      const filteredCountries = countries.filter((country) =>
+      const filtered = countries.filter((country) =>
         selected.includes(country.region)
       )
-      setCountries(filteredCountries)
+      setFilteredCountries(filtered)
     } else {
-      getCountries()
+      setFilteredCountries(countries)
     }
-  }, [selected])
+  }, [selected, countries])
 
   const handleSelect = (region: string) => {
     if (selected.includes(region)) {
@@ -45,25 +48,18 @@ const Countries: React.FC = () => {
 
   return (
     <main className="min-h-screen bg-Back-color">
-      <div className="relative">
-        <img
-          className="h-32 w-full"
-          src="/src/assets/hero-image-wr.jpg"
-          alt="hero-image"
-        />
-        <img
-          className="absolute top-2/4 right-1/4"
-          src="/src/assets/Logo.svg"
-        />
-      </div>
+      <Hero />
       <header className="flex p-2 justify-between pt-10 items-center">
         <div className="text-Text-color text-center opacity-70">
-          Found {countries.length} countries
+          Found {filteredCountries.length} countries
         </div>
-        <Search countries={countries} setCountries={setCountries} />
+        <Search countries={countries} setCountries={setFilteredCountries} />
       </header>
       <section className="flex flex-col gap-4 p-5 ">
-        <SortBy countries={countries} setCountries={setCountries} />
+        <SortBy
+          countries={filteredCountries}
+          setCountries={setFilteredCountries}
+        />
         <div>
           <span className="text-Text-color opacity-70">Region</span>
           <div className="flex pt-2 gap-3 justify-center flex-wrap">
@@ -96,13 +92,13 @@ const Countries: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {countries.map((country) => (
+            {filteredCountries.map((country) => (
               <tr key={country.name.common}>
                 <td className="py-2 px-2 text-xl lg:px-4 lg:text-5xl">
                   {country.flag}
                 </td>
                 <td className="py-2 px-2 lg:px-4 text-Text-color">
-                  {country.name.common}
+                  <Link to={`/${country.cca3}`}>{country.name.common}</Link>
                 </td>
                 <td className="py-2 px-2 lg:px-4 text-Text-color">
                   {country.population.toLocaleString()}
