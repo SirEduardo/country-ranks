@@ -6,7 +6,7 @@ export interface Country {
     area: number
     region: string
     flag: string
-    flags: string
+    flags: Flags
     capital: string
     subregion: string
     language: string[]
@@ -19,4 +19,9 @@ export interface Country {
 interface CountryName {
     common: string
     official: string
+}
+
+interface Flags {
+    png: string
+    svg: string
 }
