@@ -54,7 +54,7 @@ const Search: React.FC<Props> = ({ countries, setCountries }) => {
       />
       <img
         className="absolute right-3 top-2.5 h-5 w-5"
-        src="/src/assets/Search.svg"
+        src="/public/images/Search.svg"
       />
     </div>
   )
