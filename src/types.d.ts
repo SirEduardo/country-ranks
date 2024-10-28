@@ -12,7 +12,7 @@ export interface Country {
     language: string[]
     currencies: string[]
     continents: string
-    neighbouring: Country[]
+    borders: Neighbouring
     independent: boolean
 }
 
@@ -24,4 +24,9 @@ interface CountryName {
 interface Flags {
     png: string
     svg: string
+}
+
+interface Neighbouring {
+    name: string
+    flag: Flags
 }
