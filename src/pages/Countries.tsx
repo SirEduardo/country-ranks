@@ -88,7 +88,7 @@ const Countries: React.FC = () => {
               <th className="py-2 px4">Flag</th>
               <th className="py-2 px4">Name</th>
               <th className="py-2 px4">Population</th>
-              <th className="py-2 px4">Area (km)</th>
+              <th className="py-2 px4">Area (km²)</th>
             </tr>
           </thead>
           <tbody>
