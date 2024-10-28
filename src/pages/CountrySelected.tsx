@@ -13,6 +13,7 @@ const CountrySelected = () => {
         `https://restcountries.com/v3.1/alpha/${countryName}`
       )
       const countries = await response.json()
+      console.log(countries)
 
       if (countries.length > 0) {
         setCountry(countries[0])
@@ -34,7 +35,11 @@ const CountrySelected = () => {
         {country ? (
           <div className="bg-Back-color" key={country.name.common}>
             <div className="absolute top-28 flex flex-col justify-center items-center gap-5">
-              <img className="h-32 rounded-lg" src={country.flags.svg} />
+              <img
+                className="h-32 rounded-lg"
+                src={country.flags.png}
+                alt={`${country.name.common} flag`}
+              />
               <div>
                 <h2 className="text-Text-color text-center text-3xl">
                   {country.name.common}
