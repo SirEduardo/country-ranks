@@ -20,38 +20,35 @@ const CountrySelected: React.FC = () => {
         `https://restcountries.com/v3.1/alpha/${countryName}`
       )
       const country = await response.json()
+      const countryData = country[0]
 
-      if (country.length > 0) {
-        const countryData = country[0]
+      const languages = Object.entries(countryData.languages) as [
+        string,
+        string
+      ][]
+      setLanguages(languages)
+      const currencies = Object.entries(countryData.currencies) as [
+        string,
+        { name: string; symbol: string }
+      ][]
+      setCurrencies(currencies)
+      const borders = countryData.borders || []
+      setCountry(countryData)
 
-        const languages = Object.entries(countryData.languages) as [
-          string,
-          string
-        ][]
-        setLanguages(languages)
-        const currencies = Object.entries(countryData.currencies) as [
-          string,
-          { name: string; symbol: string }
-        ][]
-        setCurrencies(currencies)
-        const borders = countryData.borders || []
-        setCountry(countryData)
-
-        const borderDetails = await Promise.all(
-          borders.map(async (borderCode: string) => {
-            const borderResponse = await fetch(
-              `https://restcountries.com/v3.1/alpha/${borderCode}`
-            )
-            const borderCountry = await borderResponse.json()
-            return {
-              name: borderCountry[0].name.common,
-              flag: borderCountry[0].flags.png,
-              index: borderCountry[0].cca3,
-            }
-          })
-        )
-        setBordersInfo(borderDetails)
-      }
+      const borderDetails = await Promise.all(
+        borders.map(async (borderCode: string) => {
+          const borderResponse = await fetch(
+            `https://restcountries.com/v3.1/alpha/${borderCode}`
+          )
+          const borderCountry = await borderResponse.json()
+          return {
+            name: borderCountry[0].name.common,
+            flag: borderCountry[0].flags.png,
+            index: borderCountry[0].cca3,
+          }
+        })
+      )
+      setBordersInfo(borderDetails)
     } catch (error) {
       console.error("Error fetching country:", error)
     }
