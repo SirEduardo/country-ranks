@@ -14,6 +14,7 @@ export interface Country {
     continents: string
     borders: Neighbouring
     independent: boolean
+    unMember: boolean
 }
 
 interface CountryName {
